@@ -1,3 +1,13 @@
+> ## 🚨 Important Notice
+>
+> This repository is a clone of the
+> [Build an Epic React Apps legacy-module](https://github.com/kentcdodds/bookshelf)
+> by Kent C. Dodds. It has been published solely to document my GitHub activity
+> and for personal educational purposes.
+>
+> **Note:** This is not an official fork or a maintained derivative of the
+> original project.
+
 <div>
   <h1 align="center"><a href="https://www.epicreact.dev/modules/build-an-epic-react-app-v1/build-an-epic-react-app-welcome">Build an Epic React App 🚀 EpicReact.Dev</a></h1>
   <strong>
@@ -241,9 +251,9 @@ window.__bookshelf.purgeListItems()
 ## Troubleshooting
 
 <details>
-  
+
   <summary>Running "node go" does not list any branches</summary>
-  
+
 This means there was something wrong when you ran the setup.
 
 > If you made your own fork of `bookshelf` through GitHub, you may have only got

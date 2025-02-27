@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {createRoot} from 'react-dom/clients'
+import {createRoot} from 'react-dom/client'
 import {Logo} from './components/logo'
 
 function App() {

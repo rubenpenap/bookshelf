@@ -9,6 +9,8 @@ function App() {
       <h1>Bookshelf</h1>
       <div>
         <button onClick={() => alert('Login')}>Login</button>
+      </div>
+      <div>
         <button onClick={() => alert('Register')}>Register</button>
       </div>
     </div>

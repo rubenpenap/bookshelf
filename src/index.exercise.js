@@ -5,7 +5,7 @@ import {Logo} from './components/logo'
 function App() {
   return (
     <div>
-      <Logo />
+      <Logo width="80" height="80" />
       <h1>Bookshelf</h1>
       <div>
         <button onClick={() => alert('Login')}>Login</button>

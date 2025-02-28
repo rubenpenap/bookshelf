@@ -1,8 +1,10 @@
 {
   "arrowParens": "avoid",
-  "bracketSpacing": false,
+  "bracketSpacing": true,
   "endOfLine": "lf",
   "htmlWhitespaceSensitivity": "css",
+  "importOrder": ["^[./]"],
+  "importOrderSortSpecifiers": true,
   "insertPragma": false,
   "jsxBracketSameLine": false,
   "jsxSingleQuote": false,

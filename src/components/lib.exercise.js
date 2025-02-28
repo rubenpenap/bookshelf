@@ -1,5 +1,6 @@
 import styled from '@emotion/styled/macro'
-import {Dialog as ReachDialog} from '@reach/dialog'
+import { Dialog as ReachDialog } from '@reach/dialog'
+import { FaSpinner } from 'react-icons/fa'
 import * as colors from 'styles/colors'
 import * as mq from 'styles/media-queries'
 
@@ -20,15 +21,8 @@ const Button = styled.button(
     lineHeight: '1',
     borderRadius: '3px',
   },
-  ({variant = 'primary'}) => buttonVariants[variant],
+  ({ variant = 'primary' }) => buttonVariants[variant],
 )
-
-const Input = styled.input({
-  borderRadius: '3px',
-  border: `1px solid ${colors.gray10}`,
-  background: colors.gray,
-  padding: '8px 12px',
-})
 
 const CircleButton = styled.button({
   borderRadius: '30px',
@@ -62,4 +56,15 @@ const FormGroup = styled.div({
   flexDirection: 'column',
 })
 
-export {Button, Input, CircleButton, Dialog, FormGroup}
+const Input = styled.input({
+  borderRadius: '3px',
+  border: `1px solid ${colors.gray10}`,
+  background: colors.gray,
+  padding: '8px 12px',
+})
+
+const Spinner = styled(FaSpinner)({
+  /* styles here */
+})
+
+export { Button, CircleButton, Dialog, FormGroup, Input, Spinner }

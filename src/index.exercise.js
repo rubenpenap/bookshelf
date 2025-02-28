@@ -1,18 +1,17 @@
 /** @jsx jsx */
-import {jsx} from '@emotion/core'
-
-import 'bootstrap/dist/css/bootstrap-reboot.css'
+import { jsx } from '@emotion/core'
 import '@reach/dialog/styles.css'
+import 'bootstrap/dist/css/bootstrap-reboot.css'
 import * as React from 'react'
-import {createRoot} from 'react-dom/client'
-import {Button, Input, FormGroup} from './components/lib'
-import {Modal, ModalContents, ModalOpenButton} from './components/modal'
-import {Logo} from './components/logo'
+import { createRoot } from 'react-dom/client'
+import { Button, FormGroup, Input } from './components/lib'
+import { Logo } from './components/logo'
+import { Modal, ModalContents, ModalOpenButton } from './components/modal'
 
-function LoginForm({onSubmit, submitButton}) {
+function LoginForm({ onSubmit, submitButton }) {
   function handleSubmit(event) {
     event.preventDefault()
-    const {username, password} = event.target.elements
+    const { username, password } = event.target.elements
 
     onSubmit({
       username: username.value,
@@ -42,7 +41,7 @@ function LoginForm({onSubmit, submitButton}) {
         <label htmlFor="password">Password</label>
         <Input id="password" type="password" />
       </FormGroup>
-      <div>{React.cloneElement(submitButton, {type: 'submit'})}</div>
+      <div>{React.cloneElement(submitButton, { type: 'submit' })}</div>
     </form>
   )
 }
@@ -105,4 +104,4 @@ function App() {
 
 const root = createRoot(document.getElementById('root'))
 root.render(<App />)
-export {root}
+export { root }

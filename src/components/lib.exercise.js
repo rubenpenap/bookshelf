@@ -11,7 +11,6 @@ const buttonVariants = {
     color: '#434449',
   },
 }
-
 const Button = styled.button(
   {
     padding: '10px 15px',
@@ -19,9 +18,7 @@ const Button = styled.button(
     lineHeight: '1',
     borderRadius: '3px',
   },
-  ({variant = 'primary'}) => {
-    return buttonVariants[variant]
-  },
+  ({variant = 'primary'}) => buttonVariants[variant],
 )
 
 const Input = styled.input({
@@ -31,12 +28,6 @@ const Input = styled.input({
   padding: '8px 12px',
 })
 
-const FormGroup = styled.div({
-  display: 'flex',
-  flexDirection: 'column',
-})
-
-// 💰 I'm giving a few of these to you:
 const CircleButton = styled.button({
   borderRadius: '30px',
   padding: '0',
@@ -64,4 +55,9 @@ const Dialog = styled(ReachDialog)({
   },
 })
 
-export {CircleButton, Dialog, Button, Input, FormGroup}
+const FormGroup = styled.div({
+  display: 'flex',
+  flexDirection: 'column',
+})
+
+export {Button, Input, CircleButton, Dialog, FormGroup}

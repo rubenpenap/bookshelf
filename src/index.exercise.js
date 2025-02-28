@@ -4,7 +4,7 @@ import '@reach/dialog/styles.css'
 import 'bootstrap/dist/css/bootstrap-reboot.css'
 import * as React from 'react'
 import { createRoot } from 'react-dom/client'
-import { Button, FormGroup, Input } from './components/lib'
+import { Button, FormGroup, Input, Spinner } from './components/lib'
 import { Logo } from './components/logo'
 import { Modal, ModalContents, ModalOpenButton } from './components/modal'
 
@@ -41,7 +41,10 @@ function LoginForm({ onSubmit, submitButton }) {
         <label htmlFor="password">Password</label>
         <Input id="password" type="password" />
       </FormGroup>
-      <div>{React.cloneElement(submitButton, { type: 'submit' })}</div>
+      <div>
+        {React.cloneElement(submitButton, { type: 'submit' })}
+        <Spinner />
+      </div>
     </form>
   )
 }

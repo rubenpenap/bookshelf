@@ -8,23 +8,32 @@ import {FaSearch} from 'react-icons/fa'
 import {Input, BookListUL, Spinner} from './components/lib'
 import {BookRow} from './components/book-row'
 import {client} from './utils/api-client'
+import * as colors from './styles/colors'
 
 function DiscoverBooksScreen() {
   const [queried, setQueried] = React.useState(false)
   const [query, setQuery] = React.useState('')
   const [status, setStatus] = React.useState('idle')
+  const [error, setError] = React.useState(null)
   const [data, setData] = React.useState(null)
 
   const isLoading = status === 'loading'
   const isSuccess = status === 'success'
+  const isError = status === 'error'
 
   React.useEffect(() => {
     if (!queried) return
     setStatus('loading')
-    client(`books?query=${encodeURIComponent(query)}`).then(responseData => {
-      setData(responseData)
-      setStatus('success')
-    })
+    client(`books?query=${encodeURIComponent(query)}`).then(
+      data => {
+        setData(data)
+        setStatus('success')
+      },
+      error => {
+        setError(error)
+        setStatus('error')
+      },
+    )
   }, [queried, query])
 
   function handleSearchSubmit(event) {
@@ -60,6 +69,13 @@ function DiscoverBooksScreen() {
           </label>
         </Tooltip>
       </form>
+
+      {isError ? (
+        <div css={{color: colors.danger}}>
+          <p>There was an error:</p>
+          <pre> {error.message} </pre>
+        </div>
+      ) : null}
 
       {isSuccess ? (
         data?.books?.length ? (

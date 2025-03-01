@@ -1,45 +1,29 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core'
 
-import * as React from 'react'
-import './bootstrap'
 import Tooltip from '@reach/tooltip'
+import * as React from 'react'
 import {FaSearch, FaTimes} from 'react-icons/fa'
-import {Input, BookListUL, Spinner} from './components/lib'
+import {useAsync} from 'utils/hooks'
+import './bootstrap'
 import {BookRow} from './components/book-row'
-import {client} from './utils/api-client'
+import {BookListUL, Input, Spinner} from './components/lib'
 import * as colors from './styles/colors'
+import {client} from './utils/api-client'
 
 function DiscoverBooksScreen() {
+  const {data, error, run, isLoading, isError, isSuccess} = useAsync()
   const [queried, setQueried] = React.useState(false)
   const [query, setQuery] = React.useState('')
-  const [status, setStatus] = React.useState('idle')
-  const [error, setError] = React.useState(null)
-  const [data, setData] = React.useState(null)
-
-  const isLoading = status === 'loading'
-  const isSuccess = status === 'success'
-  const isError = status === 'error'
 
   React.useEffect(() => {
     if (!queried) return
-    setStatus('loading')
-    client(`books?query=${encodeURIComponent(query)}`).then(
-      data => {
-        setData(data)
-        setStatus('success')
-      },
-      error => {
-        setError(error)
-        setStatus('error')
-      },
-    )
-  }, [queried, query])
+    run(client(`books?query=${encodeURIComponent(query)}`))
+  }, [queried, query, run])
 
   function handleSearchSubmit(event) {
     event.preventDefault()
-    const query = event.target.elements.search.value
-    setQuery(query)
+    setQuery(event.target.elements.search.value)
     setQueried(true)
   }
 

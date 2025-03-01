@@ -7,6 +7,7 @@ import Tooltip from '@reach/tooltip'
 import {FaSearch} from 'react-icons/fa'
 import {Input, BookListUL, Spinner} from './components/lib'
 import {BookRow} from './components/book-row'
+import {client} from './utils/api-client'
 
 function DiscoverBooksScreen() {
   const [queried, setQueried] = React.useState(false)
@@ -20,17 +21,10 @@ function DiscoverBooksScreen() {
   React.useEffect(() => {
     if (!queried) return
     setStatus('loading')
-    window
-      .fetch(
-        `${process.env.REACT_APP_API_URL}/books?query=${encodeURIComponent(
-          query,
-        )}`,
-      )
-      .then(response => response.json())
-      .then(responseData => {
-        setData(responseData)
-        setStatus('success')
-      })
+    client(`books?query=${encodeURIComponent(query)}`).then(responseData => {
+      setData(responseData)
+      setStatus('success')
+    })
   }, [queried, query])
 
   function handleSearchSubmit(event) {

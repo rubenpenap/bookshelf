@@ -5,9 +5,8 @@ function client(
   {token, headers: customHeaders, ...customConfig} = {},
 ) {
   const config = {
-    method: 'GET',
     headers: {
-      authorization: token ? `Bearer ${token}` : undefined,
+      Authorization: token ? `Bearer ${token}` : undefined,
       ...customHeaders,
     },
     ...customConfig,

@@ -8,9 +8,13 @@ import {UnauthenticatedApp} from './unauthenticated-app'
 
 function App() {
   const [user, setUser] = React.useState(null)
-  const login = form => auth.login(form).then(user => setUser(user))
-  const register = form => auth.register(form).then(user => setUser(user))
-  const logout = () => auth.logout().then(() => setUser(null))
+
+  const login = form => auth.login(form).then(u => setUser(u))
+  const register = form => auth.register(form).then(u => setUser(u))
+  const logout = () => {
+    auth.logout()
+    setUser(null)
+  }
 
   return user ? (
     <AuthenticatedApp user={user} logout={logout} />
@@ -20,8 +24,3 @@ function App() {
 }
 
 export {App}
-
-/*
-eslint
-  no-unused-vars: "off",
-*/

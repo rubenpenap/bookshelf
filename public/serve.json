@@ -1,1 +1,9 @@
-{}
+{
+  "redirect": [
+    {
+    "source": "/",
+    "destination": "/discover",
+    "type": 302
+    }
+  ]
+}

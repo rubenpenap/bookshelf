@@ -3,10 +3,11 @@ import {jsx} from '@emotion/core'
 
 import * as React from 'react'
 import * as auth from 'auth-provider'
-import {FullPageSpinner} from 'components/lib'
-import * as colors from 'styles/colors'
+import {BrowserRouter as Router} from 'react-router-dom'
+import {FullPageSpinner} from './components/lib'
+import * as colors from './styles/colors'
 import {client} from './utils/api-client'
-import {useAsync} from 'utils/hooks'
+import {useAsync} from './utils/hooks'
 import {AuthenticatedApp} from './authenticated-app'
 import {UnauthenticatedApp} from './unauthenticated-app'
 
@@ -45,7 +46,7 @@ function App() {
     setData(null)
   }
 
-  if (isIdle || isLoading) {
+  if (isLoading || isIdle) {
     return <FullPageSpinner />
   }
 
@@ -54,26 +55,27 @@ function App() {
       <div
         css={{
           color: colors.danger,
+          height: '100vh',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          height: '100vh',
         }}
       >
-        <div>
-          <p>Uh oh... There's a problem. Try refreshing the app.</p>
-          <pre>{error.message}</pre>
-        </div>
+        <p>Uh oh... There's a problem. Try refreshing the app.</p>
+        <pre>{error.message}</pre>
       </div>
     )
   }
 
   if (isSuccess) {
+    const props = {user, login, register, logout}
     return user ? (
-      <AuthenticatedApp user={user} logout={logout} />
+      <Router>
+        <AuthenticatedApp {...props} />
+      </Router>
     ) : (
-      <UnauthenticatedApp login={login} register={register} />
+      <UnauthenticatedApp {...props} />
     )
   }
 }

@@ -117,8 +117,3 @@ function AppRoutes({user}) {
 }
 
 export {AuthenticatedApp}
-
-/*
-eslint
-  jsx-a11y/anchor-has-content: "off",
-*/

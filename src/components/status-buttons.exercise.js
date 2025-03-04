@@ -65,9 +65,6 @@ function StatusButtons({user, book}) {
     {onSettled: () => queryCache.invalidateQueries('list-items')},
   )
 
-  // 🐨 call useMutation here and assign the mutate function to "remove"
-  // the mutate function should call the list-items/:listItemId endpoint with a DELETE
-
   // 🐨 call useMutation here and assign the mutate function to "create"
   // the mutate function should call the list-items endpoint with a POST
   // and the bookId the listItem is being created for.

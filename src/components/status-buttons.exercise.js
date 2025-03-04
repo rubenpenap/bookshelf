@@ -10,7 +10,7 @@ import {
   FaTimesCircle,
 } from 'react-icons/fa'
 import Tooltip from '@reach/tooltip'
-import {useMutation} from 'react-query'
+import {useQuery, useMutation, queryCache} from 'react-query'
 import {client} from 'utils/api-client'
 import {useAsync} from 'utils/hooks'
 import * as colors from 'styles/colors'
@@ -48,10 +48,16 @@ function TooltipButton({label, highlight, onClick, icon, ...rest}) {
 }
 
 function StatusButtons({user, book}) {
-  const listItem = null
+  const {data: listItems} = useQuery({
+    queryKey: 'list-items',
+    queryFn: () =>
+      client(`list-items`, {token: user.token}).then(data => data.listItems),
+  })
+  const listItem = listItems?.find(li => li.bookId === book.id) ?? null
 
-  const [create] = useMutation(({bookId}) =>
-    client('list-items', {data: {bookId}, token: user.token}),
+  const [create] = useMutation(
+    ({bookId}) => client('list-items', {data: {bookId}, token: user.token}),
+    {onSettled: () => queryCache.invalidateQueries('list-items')},
   )
 
   // 🐨 call useMutation here and assign the mutate function to "remove"

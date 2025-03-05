@@ -11,6 +11,7 @@ import {Rating} from './rating'
 
 function BookRow({user, book}) {
   const {title, author, coverImageUrl} = book
+
   const {data: listItems} = useQuery({
     queryKey: 'list-items',
     queryFn: () =>

@@ -61,6 +61,10 @@ function Rating({listItem, user}) {
             {
               [`.${rootClassName} &:checked ~ label`]: {color: colors.gray20},
               [`.${rootClassName} &:checked + label`]: {color: 'orange'},
+              // !important is here because we're doing special non-css-in-js things
+              // and so we have to deal with specificity and cascade. But, I promise
+              // this is better than trying to make this work with JavaScript.
+              // So deal with it 😎
               [`.${rootClassName} &:hover ~ label`]: {
                 color: `${colors.gray20} !important`,
               },

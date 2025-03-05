@@ -7,7 +7,6 @@ import {FaRegCalendarAlt} from 'react-icons/fa'
 import Tooltip from '@reach/tooltip'
 import {useParams} from 'react-router-dom'
 import {useQuery, useMutation, queryCache} from 'react-query'
-import {useAsync} from 'utils/hooks'
 import {client} from 'utils/api-client'
 import {formatDate} from 'utils/misc'
 import * as mq from 'styles/media-queries'
@@ -28,22 +27,20 @@ const loadingBook = {
 
 function BookScreen({user}) {
   const {bookId} = useParams()
-
   const {data: book = loadingBook} = useQuery({
     queryKey: ['book', {bookId}],
     queryFn: () =>
       client(`books/${bookId}`, {token: user.token}).then(data => data.book),
   })
 
-  const {title, author, coverImageUrl, publisher, synopsis} = book
-
   const {data: listItems} = useQuery({
     queryKey: 'list-items',
     queryFn: () =>
       client(`list-items`, {token: user.token}).then(data => data.listItems),
   })
+  const listItem = listItems?.find(li => li.bookId === bookId) ?? null
 
-  const listItem = listItems?.find(li => li.bookId === book.id) ?? null
+  const {title, author, coverImageUrl, publisher, synopsis} = book
 
   return (
     <div>
@@ -134,11 +131,9 @@ function NotesTextarea({listItem, user}) {
       }),
     {onSettled: () => queryCache.invalidateQueries('list-items')},
   )
-
-  const debouncedMutate = React.useMemo(
-    () => debounceFn(mutate, {wait: 300}),
-    [mutate],
-  )
+  const debouncedMutate = React.useMemo(() => debounceFn(mutate, {wait: 300}), [
+    mutate,
+  ])
 
   function handleNotesChange(e) {
     debouncedMutate({id: listItem.id, notes: e.target.value})

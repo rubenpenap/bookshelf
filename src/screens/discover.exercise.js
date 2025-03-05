@@ -29,15 +29,19 @@ function DiscoverBooksScreen({user}) {
   const [query, setQuery] = React.useState('')
   const [queried, setQueried] = React.useState(false)
 
-  const {data, error, isLoading, isError, isSuccess} = useQuery({
+  const {
+    data: books = loadingBooks,
+    error,
+    isLoading,
+    isError,
+    isSuccess,
+  } = useQuery({
     queryKey: ['bookSearch', {query}],
     queryFn: () =>
       client(`books?query=${encodeURIComponent(query)}`, {
         token: user.token,
       }).then(data => data.books),
   })
-
-  const books = data ?? loadingBooks
 
   function handleSearchSubmit(event) {
     event.preventDefault()

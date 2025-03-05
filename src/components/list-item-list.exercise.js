@@ -17,7 +17,6 @@ function ListItemList({
     queryFn: () =>
       client(`list-items`, {token: user.token}).then(data => data.listItems),
   })
-
   const filteredListItems = listItems?.filter(filterListItems)
 
   if (!listItems?.length) {

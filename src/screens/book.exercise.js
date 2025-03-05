@@ -8,6 +8,7 @@ import Tooltip from '@reach/tooltip'
 import {useParams} from 'react-router-dom'
 import {useQuery, useMutation, queryCache} from 'react-query'
 import {client} from 'utils/api-client'
+import {useBookSearch} from 'utils/books'
 import {formatDate} from 'utils/misc'
 import * as mq from 'styles/media-queries'
 import * as colors from 'styles/colors'
@@ -131,9 +132,10 @@ function NotesTextarea({listItem, user}) {
       }),
     {onSettled: () => queryCache.invalidateQueries('list-items')},
   )
-  const debouncedMutate = React.useMemo(() => debounceFn(mutate, {wait: 300}), [
-    mutate,
-  ])
+  const debouncedMutate = React.useMemo(
+    () => debounceFn(mutate, {wait: 300}),
+    [mutate],
+  )
 
   function handleNotesChange(e) {
     debouncedMutate({id: listItem.id, notes: e.target.value})

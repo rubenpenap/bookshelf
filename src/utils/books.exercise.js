@@ -38,9 +38,9 @@ function useBook(bookId, user) {
   return data ?? loadingBook
 }
 
-function refetchBookSearchQuery(user) {
+async function refetchBookSearchQuery(user) {
   queryCache.removeQueries('bookSearch')
-  queryCache.prefetchQuery(getBookSearchConfig('', user))
+  await queryCache.prefetchQuery(getBookSearchConfig('', user))
 }
 
 export {useBook, useBookSearch, refetchBookSearchQuery}

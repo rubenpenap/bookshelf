@@ -14,7 +14,6 @@ const queryConfig = {
     },
   },
 }
-
 function AppProviders({children}) {
   return (
     <ReactQueryConfigProvider config={queryConfig}>

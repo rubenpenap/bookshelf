@@ -1,6 +1,11 @@
 import React from 'react'
 import {Dialog} from './lib'
 
+const callAll =
+  (...fns) =>
+  (...args) =>
+    fns.forEach(fn => fn && fn(...args))
+
 const ModalContext = React.createContext()
 
 function Modal(props) {
@@ -10,12 +15,16 @@ function Modal(props) {
 
 function ModalDismissButton({children: child}) {
   const [, setIsOpen] = React.useContext(ModalContext)
-  return React.cloneElement(child, {onClick: () => setIsOpen(false)})
+  return React.cloneElement(child, {
+    onClick: callAll(() => setIsOpen(false), child.props.onClick),
+  })
 }
 
 function ModalOpenButton({children: child}) {
   const [, setIsOpen] = React.useContext(ModalContext)
-  return React.cloneElement(child, {onClick: () => setIsOpen(true)})
+  return React.cloneElement(child, {
+    onClick: callAll(() => setIsOpen(true), child.props.onClick),
+  })
 }
 
 function ModalContents(props) {

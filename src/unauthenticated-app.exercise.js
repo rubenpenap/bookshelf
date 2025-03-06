@@ -13,8 +13,8 @@ import {
 } from './components/lib'
 import {
   Modal,
-  ModalContents,
   ModalDismissButton,
+  ModalContents,
   ModalOpenButton,
 } from './components/modal'
 import {Logo} from './components/logo'
@@ -107,9 +107,7 @@ function UnauthenticatedApp() {
       >
         <Modal>
           <ModalOpenButton>
-            <Button onClick={() => alert('hello')} variant="primary">
-              Login
-            </Button>
+            <Button variant="primary">Login</Button>
           </ModalOpenButton>
           <ModalContents aria-label="Login form">
             {circleDismissButton}
@@ -126,7 +124,7 @@ function UnauthenticatedApp() {
           </ModalOpenButton>
           <ModalContents aria-label="Registration form">
             {circleDismissButton}
-            <h3 css={{textAlign: 'center', fontSize: '2em'}}>Login</h3>
+            <h3 css={{textAlign: 'center', fontSize: '2em'}}>Register</h3>
             <LoginForm
               onSubmit={register}
               submitButton={<Button variant="secondary">Register</Button>}

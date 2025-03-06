@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import {useQuery, useMutation, queryCache} from 'react-query'
 import {AuthContext} from 'context/auth-context'
 import {setQueryDataForBook} from './books'
@@ -10,10 +10,12 @@ function useListItems() {
     queryKey: 'list-items',
     queryFn: () =>
       client(`list-items`, {token: user.token}).then(data => data.listItems),
-    onSuccess: async listItems => {
-      for (const listItem of listItems) {
-        setQueryDataForBook(listItem.book)
-      }
+    config: {
+      onSuccess: async listItems => {
+        for (const listItem of listItems) {
+          setQueryDataForBook(listItem.book)
+        }
+      },
     },
   })
   return data ?? []

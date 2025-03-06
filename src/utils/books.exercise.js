@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import {useQuery, queryCache} from 'react-query'
 import {AuthContext} from 'context/auth-context'
 import {client} from './api-client'
@@ -18,8 +18,6 @@ const loadingBooks = Array.from({length: 10}, (v, index) => ({
   ...loadingBook,
 }))
 
-// 🦉 note that this is *not* treated as a hook and is instead called by other hooks
-// So we'll continue to accept the user here.
 const getBookSearchConfig = (query, user) => ({
   queryKey: ['bookSearch', {query}],
   queryFn: () =>
@@ -60,11 +58,6 @@ function useRefetchBookSearchQuery() {
     },
     [user],
   )
-}
-
-async function refetchBookSearchQuery(user) {
-  queryCache.removeQueries('bookSearch')
-  await queryCache.prefetchQuery(getBookSearchConfig('', user))
 }
 
 const bookQueryConfig = {

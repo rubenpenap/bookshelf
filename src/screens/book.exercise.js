@@ -19,7 +19,7 @@ import {StatusButtons} from 'components/status-buttons'
 function BookScreen({user}) {
   const {bookId} = useParams()
   // 💣 remove the user argument
-  const book = useBook(bookId, user)
+  const book = useBook(bookId)
   // 💣 remove the user argument
   const listItem = useListItem(bookId, user)
 
@@ -120,9 +120,10 @@ function ListItemTimeframe({listItem}) {
 function NotesTextarea({listItem, user}) {
   // 💣 remove the user argument here
   const [mutate, {error, isError, isLoading}] = useUpdateListItem(user)
-  const debouncedMutate = React.useMemo(() => debounceFn(mutate, {wait: 300}), [
-    mutate,
-  ])
+  const debouncedMutate = React.useMemo(
+    () => debounceFn(mutate, {wait: 300}),
+    [mutate],
+  )
 
   function handleNotesChange(e) {
     debouncedMutate({id: listItem.id, notes: e.target.value})

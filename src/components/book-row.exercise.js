@@ -8,10 +8,10 @@ import * as colors from 'styles/colors'
 import {StatusButtons} from './status-buttons'
 import {Rating} from './rating'
 
-function BookRow({user, book}) {
+function BookRow({book}) {
   const {title, author, coverImageUrl} = book
 
-  const listItem = useListItem(user, book.id)
+  const listItem = useListItem(book.id)
 
   const id = `book-row-book-${book.id}`
 
@@ -71,9 +71,7 @@ function BookRow({user, book}) {
               >
                 {title}
               </h2>
-              {listItem?.finishDate ? (
-                <Rating user={user} listItem={listItem} />
-              ) : null}
+              {listItem?.finishDate ? <Rating listItem={listItem} /> : null}
             </div>
             <div css={{marginLeft: 10}}>
               <div
@@ -105,7 +103,7 @@ function BookRow({user, book}) {
           height: '100%',
         }}
       >
-        <StatusButtons user={user} book={book} />
+        <StatusButtons book={book} />
       </div>
     </div>
   )

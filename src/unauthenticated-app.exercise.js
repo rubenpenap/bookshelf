@@ -2,10 +2,23 @@
 import {jsx} from '@emotion/core'
 
 import * as React from 'react'
-import {useAuth} from './context/auth-context'
-import {Input, Button, Spinner, FormGroup, ErrorMessage} from './components/lib'
-import {Modal, ModalContents, ModalOpenButton} from './components/modal'
+import VisuallyHidden from '@reach/visually-hidden'
+import {
+  Input,
+  CircleButton,
+  Button,
+  Spinner,
+  FormGroup,
+  ErrorMessage,
+} from './components/lib'
+import {
+  Modal,
+  ModalDismissButton,
+  ModalContents,
+  ModalOpenButton,
+} from './components/modal'
 import {Logo} from './components/logo'
+import {useAuth} from './context/auth-context'
 import {useAsync} from './utils/hooks'
 
 function LoginForm({onSubmit, submitButton}) {

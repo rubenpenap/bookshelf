@@ -7,6 +7,7 @@ import {client} from 'utils/api-client'
 import {useAsync} from 'utils/hooks'
 
 const AuthContext = React.createContext()
+AuthContext.displayName = 'AuthContext'
 
 async function getUser() {
   let user = null

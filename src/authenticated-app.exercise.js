@@ -110,7 +110,7 @@ function NavLink(props) {
   )
 }
 
-function Nav() {
+function Nav(params) {
   return (
     <nav
       css={{
@@ -157,4 +157,4 @@ function AppRoutes() {
   )
 }
 
-export {AuthenticatedApp}
+export default AuthenticatedApp

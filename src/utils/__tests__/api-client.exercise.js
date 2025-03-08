@@ -3,10 +3,10 @@ import * as auth from 'auth-provider'
 import {server, rest} from 'test/server'
 import {client} from '../api-client'
 
+const apiURL = process.env.REACT_APP_API_URL
+
 jest.mock('react-query')
 jest.mock('auth-provider')
-
-const apiURL = process.env.REACT_APP_API_URL
 
 // enable API mocking in test runs using the same request handlers
 // as for the client-side mocking.
@@ -84,20 +84,22 @@ test('when data is provided, it is stringified and the method defaults to POST',
 
 test('automatically logs the user out if a request returns a 401', async () => {
   const endpoint = 'test-endpoint'
+  const mockResult = {mockValue: 'VALUE'}
   server.use(
     rest.get(`${apiURL}/${endpoint}`, async (req, res, ctx) => {
-      return res(ctx.status(401))
+      return res(ctx.status(401), ctx.json(mockResult))
     }),
   )
 
-  const result = await client(endpoint).catch(e => e)
+  const error = await client(endpoint).catch(e => e)
 
-  expect(result.message).toMatchInlineSnapshot(`"Please re-authenticate."`)
+  expect(error.message).toMatchInlineSnapshot(`"Please re-authenticate."`)
+
   expect(queryCache.clear).toHaveBeenCalledTimes(1)
   expect(auth.logout).toHaveBeenCalledTimes(1)
 })
 
-test('correctly reject the promise if there is an error', async () => {
+test('correctly rejects the promise if there is an error', async () => {
   const endpoint = 'test-endpoint'
   const testError = {message: 'Test error'}
   server.use(

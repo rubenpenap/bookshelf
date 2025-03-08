@@ -32,11 +32,19 @@ test('adds auth token when a token is provided', async () => {
   expect(request.headers.get('Authorization')).toBe(`Bearer ${token}`)
 })
 
-test('allows for config overrides', async () => {})
-// 🐨 do a very similar setup to the previous test
-// 🐨 create a custom config that specifies properties like "mode" of "cors" and a custom header
-// 🐨 call the client with the endpoint and the custom config
-// 🐨 verify the request had the correct properties
+test('allows for config overrides', async () => {
+  const mode = 'cors'
+  const customConfig = {mode: mode}
+  let request
+  server.use(
+    rest.get(`${apiURL}/${endpoint}`, async (req, res, ctx) => {
+      request = req
+      return res(ctx.json(mockResult))
+    }),
+  )
+  await client(endpoint, customConfig)
+  expect(request.mode).toBe(mode)
+})
 
 test('when data is provided, it is stringified and the method defaults to POST', async () => {})
 // 🐨 create a mock data object

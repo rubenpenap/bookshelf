@@ -48,11 +48,10 @@ test('calling run with a promise which resolves', async () => {
   })
   expect(result.current).toEqual({
     ...initialState,
-    status: 'pending',
+    status: 'resolved',
     data: resolvedValue,
     isIdle: false,
     isSuccess: true,
-    status: 'resolved',
   })
   act(() => {
     result.current.reset()
@@ -60,18 +59,29 @@ test('calling run with a promise which resolves', async () => {
   expect(result.current).toEqual(initialState)
 })
 
-// 🐨 call `run`, passing the promise
-//    (💰 this updates state so it needs to be done in an `act` callback)
-// 🐨 assert that result.current is the correct pending state
+test('calling run with a promise which rejects', async () => {
+  const {promise, reject} = deferred()
+  const {result} = renderHook(() => useAsync())
 
-// 🐨 call resolve and wait for the promise to be resolved
-//    (💰 this updates state too and you'll need it to be an async `act` call so you can await the promise)
-// 🐨 assert the resolved state
-
-// 🐨 call `reset` (💰 this will update state, so...)
-// 🐨 assert the result.current has actually been reset
-
-test('calling run with a promise which rejects', async () => {})
+  let p
+  act(() => {
+    p = result.current.run(promise)
+  })
+  const rejectedValue = Symbol('Rejected Value')
+  await act(async () => {
+    reject(rejectedValue)
+    await p.catch(() => {
+      // ignore error
+    })
+  })
+  expect(result.current).toEqual({
+    ...initialState,
+    status: 'rejected',
+    error: rejectedValue,
+    isIdle: false,
+    isError: true,
+  })
+})
 // 🐨 this will be very similar to the previous test, except you'll reject the
 // promise instead and assert on the error state.
 // 💰 to avoid the promise actually failing your test, you can catch

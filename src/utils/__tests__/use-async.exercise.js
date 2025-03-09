@@ -82,12 +82,22 @@ test('calling run with a promise which rejects', async () => {
     isError: true,
   })
 })
-// 🐨 this will be very similar to the previous test, except you'll reject the
-// promise instead and assert on the error state.
-// 💰 to avoid the promise actually failing your test, you can catch
-//    the promise returned from `run` with `.catch(() => {})`
 
-test('can specify an initial state', async () => {})
+test('can specify an initial state', async () => {
+  const mockData = Symbol('Resolved Data')
+  const customInitialState = {
+    status: 'resolved',
+    data: mockData,
+  }
+  const {result} = renderHook(() => useAsync(customInitialState))
+
+  expect(result.current).toEqual({
+    ...initialState,
+    ...customInitialState,
+    isIdle: false,
+    isSuccess: true,
+  })
+})
 // 💰 useAsync(customInitialState)
 
 test('can set the data', async () => {})

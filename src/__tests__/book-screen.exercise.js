@@ -6,9 +6,9 @@ import * as auth from 'auth-provider'
 import {AppProviders} from 'context'
 import {App} from 'app'
 
-afterEach(() => {
+afterEach(async () => {
   queryCache.clear()
-  auth.logout()
+  await auth.logout()
 })
 
 test('renders all the book information', async () => {

@@ -1,14 +1,30 @@
 import {renderHook, act} from '@testing-library/react'
 import {useAsync} from '../hooks'
 
-// function deferred() {
-//   let resolve, reject
-//   const promise = new Promise((res, rej) => {
-//     resolve = res
-//     reject = rej
-//   })
-//   return {promise, resolve, reject}
-// }
+function deferred() {
+  let resolve, reject
+  const promise = new Promise((res, rej) => {
+    resolve = res
+    reject = rej
+  })
+  return {promise, resolve, reject}
+}
+
+const initialState = {
+  status: 'idle',
+  data: null,
+  error: null,
+
+  isIdle: true,
+  isLoading: false,
+  isError: false,
+  isSuccess: false,
+
+  run: expect.any(Function),
+  reset: expect.any(Function),
+  setData: expect.any(Function),
+  setError: expect.any(Function),
+}
 
 // Use it like this:
 // const {promise, resolve} = deferred()
@@ -19,19 +35,18 @@ import {useAsync} from '../hooks'
 // do stuff/make assertions you want to after the promise has resolved
 
 test('calling run with a promise which resolves', async () => {
+  const {promise, resolve} = deferred()
+
   const {result} = renderHook(() => useAsync())
+  expect(result.current).toEqual(initialState)
+  act(() => {
+    result.current.run(promise)
+  })
   expect(result.current).toEqual({
-    isIdle: true,
-    isLoading: false,
-    isError: false,
-    isSuccess: false,
-    setData: expect.any(Function),
-    setError: expect.any(Function),
-    error: null,
-    status: 'idle',
-    data: null,
-    run: expect.any(Function),
-    reset: expect.any(Function),
+    ...initialState,
+    status: 'pending',
+    isIdle: false,
+    isLoading: true,
   })
 })
 

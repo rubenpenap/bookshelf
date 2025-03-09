@@ -39,14 +39,28 @@ test('calling run with a promise which resolves', async () => {
 
   const {result} = renderHook(() => useAsync())
   expect(result.current).toEqual(initialState)
+  let p
   act(() => {
-    result.current.run(promise)
+    p = result.current.run(promise)
   })
   expect(result.current).toEqual({
     ...initialState,
     status: 'pending',
     isIdle: false,
     isLoading: true,
+  })
+  const resolvedValue = Symbol('Resolved Value')
+  await act(async () => {
+    resolve(resolvedValue)
+    await p
+  })
+  expect(result.current).toEqual({
+    ...initialState,
+    status: 'pending',
+    data: resolvedValue,
+    isIdle: false,
+    isSuccess: true,
+    status: 'resolved',
   })
 })
 

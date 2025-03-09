@@ -26,18 +26,10 @@ const initialState = {
   setError: expect.any(Function),
 }
 
-// Use it like this:
-// const {promise, resolve} = deferred()
-// promise.then(() => console.log('resolved'))
-// do stuff/make assertions you want to before calling resolve
-// resolve()
-// await promise
-// do stuff/make assertions you want to after the promise has resolved
-
 test('calling run with a promise which resolves', async () => {
   const {promise, resolve} = deferred()
-
   const {result} = renderHook(() => useAsync())
+
   expect(result.current).toEqual(initialState)
   let p
   act(() => {
@@ -62,6 +54,10 @@ test('calling run with a promise which resolves', async () => {
     isSuccess: true,
     status: 'resolved',
   })
+  act(() => {
+    result.current.reset()
+  })
+  expect(result.current).toEqual(initialState)
 })
 
 // 🐨 call `run`, passing the promise

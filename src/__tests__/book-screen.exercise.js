@@ -11,8 +11,8 @@ import {buildUser, buildBook} from 'test/generate'
 import * as usersDB from 'test/data/users'
 import * as booksDB from 'test/data/books'
 import * as listItemsDB from 'test/data/list-items'
-import {formatDate} from 'utils/misc'
 import {AppProviders} from 'context'
+import {formatDate} from 'utils/misc'
 import {App} from 'app'
 
 // general cleanup
@@ -27,13 +27,17 @@ afterEach(async () => {
 })
 
 async function render(ui, {route = '/list', user, ...renderOptions} = {}) {
+  // if you want to render the app unauthenticated then pass "null" as the user
   user = typeof user === 'undefined' ? await loginAsUser() : user
   window.history.pushState({}, 'Test page', route)
+
   const returnValue = {
     ...rtlRender(ui, {wrapper: AppProviders, ...renderOptions}),
     user,
   }
+
   await waitForLoadingToFinish()
+
   return returnValue
 }
 

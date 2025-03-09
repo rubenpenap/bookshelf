@@ -81,13 +81,16 @@ test('can create a list item for the book', async () => {
     ...screen.queryAllByLabelText(/loading/i),
     ...screen.queryAllByText(/loading/i),
   ])
+
   const addToListButton = screen.getByRole('button', {name: /add to list/i})
   await userEvent.click(addToListButton)
   expect(addToListButton).toBeDisabled()
+
   await waitForElementToBeRemoved(() => [
     ...screen.queryAllByLabelText(/loading/i),
     ...screen.queryAllByText(/loading/i),
   ])
+
   expect(
     screen.getByRole('button', {name: /mark as read/i}),
   ).toBeInTheDocument()
@@ -95,8 +98,10 @@ test('can create a list item for the book', async () => {
     screen.getByRole('button', {name: /remove from list/i}),
   ).toBeInTheDocument()
   expect(screen.getByRole('textbox', {name: /notes/i})).toBeInTheDocument()
+
   const startDateNode = screen.getByLabelText(/start date/i)
-  expect(startDateNode).toHaveTextContent(formatDate(new Date()))
+  expect(startDateNode).toHaveTextContent(formatDate(Date.now()))
+
   expect(
     screen.queryByRole('button', {name: /add to list/i}),
   ).not.toBeInTheDocument()
@@ -104,5 +109,4 @@ test('can create a list item for the book', async () => {
     screen.queryByRole('button', {name: /mark as unread/i}),
   ).not.toBeInTheDocument()
   expect(screen.queryByRole('radio', {name: /star/i})).not.toBeInTheDocument()
-  // screen.debug()
 })
